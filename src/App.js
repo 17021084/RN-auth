@@ -13,11 +13,15 @@ import {ButtonLearnMore, Header, Spinner} from './components/common';
 import firebase from 'firebase';
 import LoginForm from './components/LoginForm';
 
+import firebase from 'firebase';
+
 class App extends Component {
+
   state = {isLogged: null};
 
   // we should use hook instead. because is to outdate
   componentWillMount() {
+
     //this will be hide in env. but this is'nt important
     firebase.initializeApp({
       apiKey: 'AIzaSyDTnIn585PpiG10GsbI7fBWb4Ze2DqY7RU',
@@ -28,6 +32,7 @@ class App extends Component {
       appId: '1:563343592115:web:33c47861336405ee9a3ec6',
       measurementId: 'G-KR2R739DTC',
     });
+
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         console.log('login roi');
@@ -58,6 +63,7 @@ class App extends Component {
         return <Spinner />;
     }
   }
+
 
   render() {
     return (
