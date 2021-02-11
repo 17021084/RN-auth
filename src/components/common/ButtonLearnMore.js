@@ -5,12 +5,18 @@ function ButtonLearnMore({onPress, children}) {
   //Nhan ham xuong
   return (
     <TouchableOpacity style={styles.buttonStyle} onPress={onPress}>
-      {children}
+      <Text style={styles.textStyle}>{children} </Text>
     </TouchableOpacity>
   );
 }
 
 const styles = {
+  textStyle: {
+    fontWeigt: '400',
+    color: '#007afd',
+    fontSize: 20,
+    alignSelf: 'center',
+  },
   buttonStyle: {
     flex: 1,
     backgroundColor: '#fff ',
