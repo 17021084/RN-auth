@@ -1,29 +1,29 @@
 import React, {Component} from 'react';
 import {Text, TextInput, View} from 'react-native';
-import {ButtonLearnMore, Card, CardSection, Input} from './common';
+import {ButtonLearnMore, Card, CardSection, Input, Spinner} from './common';
 import firebase from 'firebase';
 
 export default class LoginForm extends Component {
-  state = {email: '', password: '', error: '', success: ''};
+  state = {email: '', password: '', error: '', success: '', isLoading: false};
 
   onButtonPress() {
     const {email, password} = this.state;
-    this.setState({error: '', success: ''});
+    this.setState({error: '', success: '', isLoading: true});
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => {
-        this.setState({success: 'logged'});
+        this.setState({success: 'logged', isLoading: false});
       })
       .catch(() => {
         firebase
           .auth()
           .createUserWithEmailAndPassword(email, password)
           .then(() => {
-            this.setState({success: 'Registed'});
+            this.setState({success: 'Registed', isLoading: false});
           })
           .catch(() => {
-            this.setState({error: 'Authentication failed'});
+            this.setState({error: 'Authentication failed', isLoading: false});
           });
       });
   }
@@ -55,9 +55,13 @@ export default class LoginForm extends Component {
           <Text style={{color: 'green'}}>{this.state.success}</Text>
         </CardSection>
         <CardSection>
-          <ButtonLearnMore onPress={this.onButtonPress.bind(this)}>
-            login
-          </ButtonLearnMore>
+          {this.state.isLoading ? (
+            <Spinner size={'small'} />
+          ) : (
+            <ButtonLearnMore onPress={this.onButtonPress.bind(this)}>
+              login
+            </ButtonLearnMore>
+          )}
         </CardSection>
       </Card>
     );
